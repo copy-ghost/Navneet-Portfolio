@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navneet Dixit | 3D Artist Portfolio</title>
+    <!-- Font Awesome for Social Logos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #9A0002; /* Bold Crimson */
+            --bg: #EFE6DE;      /* Warm Cream */
+            --text-dark: #2A1A1A;
+            --text-light: #EFE6DE;
+            --radius-lg: 24px;
+            --radius-md: 12px;
+            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.2rem 0;
+            background: rgba(239, 230, 222, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            border-bottom: 1px solid rgba(154, 0, 2, 0.1);
+        }
+
+        .nav-content { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .logo { 
+            font-size: 1.2rem; 
+            font-weight: 900; 
+            color: var(--primary); 
+            text-decoration: none; 
+            letter-spacing: 1px;
+            z-index: 2100;
+        }
+
+        /* Desktop Nav Links */
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a { 
+            color: var(--text-dark); 
+            text-decoration: none; 
+            margin-left: 2rem; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            transition: var(--transition); 
+        }
+        
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 2100;
+            padding: 5px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: clamp(140px, 20vh, 200px) 0 80px 0;
+            text-align: center;
+            background: linear-gradient(to bottom, #f7f2ed, var(--bg));
+        }
+
+        .profile-img {
+            width: clamp(140px, 25vw, 180px);
+            height: clamp(140px, 25vw, 180px);
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: fadeInScale 1.2s forwards cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeInScale {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .name-wrapper {
+            min-height: clamp(60px, 10vh, 120px);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        h1 { 
+            font-size: clamp(2rem, 10vw, 5.5rem); 
+            font-weight: 900; 
+            color: var(--primary); 
+            letter-spacing: -1px; 
+            line-height: 1.1;
+            display: block;
+            text-align: center;
+            word-break: keep-all; 
+            overflow-wrap: normal;
+        }
+
+        .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            filter: blur(5px);
+            animation: charIn 0.8s forwards;
+        }
+
+        @keyframes charIn {
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        .tagline { 
+            font-size: clamp(0.65rem, 2.5vw, 1.1rem); 
+            font-weight: 300; 
+            text-transform: uppercase; 
+            letter-spacing: clamp(3px, 1vw, 8px); 
+            color: var(--text-dark); 
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 1.2s;
+        }
+
+        /* Summary */
+        .professional-summary {
+            max-width: 850px;
+            margin: 0 auto;
+            font-size: clamp(0.95rem, 3.5vw, 1.25rem);
+            color: var(--text-dark);
+            line-height: 1.7;
+            padding: 2rem 1rem;
+            border-top: 1px solid rgba(154, 0, 2, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.1rem;
+        }
+
+        .word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: wordIn 0.5s forwards;
+        }
+
+        @keyframes wordIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Sections */
+        section { padding: clamp(60px, 8vh, 120px) 0; }
+        .section-title { 
+            font-size: clamp(1.4rem, 4.5vw, 2rem); 
+            font-weight: 900; 
+            color: var(--primary); 
+            margin-bottom: 3rem; 
+            text-transform: uppercase; 
+            position: relative; 
+        }
+        .section-title::after { 
+            content: ''; 
+            position: absolute; 
+            left: 0; 
+            bottom: -8px; 
+            width: 40px; 
+            height: 3px; 
+            background: var(--primary); 
+        }
+
+        /* Responsive Grid for Projects */
+        .project-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 450px), 1fr)); 
+            gap: 2rem; 
+        }
+        
+        .project-card { 
+            background: #ffffff; 
+            border-radius: var(--radius-lg); 
+            overflow: hidden; 
+            cursor: pointer; 
+            transition: var(--transition); 
+            border: 1px solid rgba(154, 0, 2, 0.05); 
+            box-shadow: 0 10px 30px rgba(154, 0, 2, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(154, 0, 2, 0.1); }
+        
+        .card-header { position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; background: #ddd; }
+        .card-header img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        
+        .card-body { padding: clamp(1.5rem, 4vw, 2rem); }
+        .card-body h3 { font-size: clamp(1.2rem, 3.5vw, 1.6rem); color: var(--primary); margin-bottom: 0.5rem; }
+        .card-body p { color: #555; font-size: 0.9rem; }
+
+        .expanded-content { max-height: 0; overflow: hidden; transition: var(--transition); background: #fcfcfc; }
+        .project-card.active .expanded-content { max-height: 2500px; padding: 0 1.5rem 1.5rem 1.5rem; }
+        
+        /* 4 Image Gallery Layout */
+        .image-gallery { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 12px; 
+            margin-top: 20px; 
+        }
+        .image-gallery img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-md); background: #eee; }
+
+        /* Skills */
+        .skills-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); 
+            gap: 1.5rem; 
+        }
+        .skill-box { 
+            background: var(--primary); 
+            color: var(--text-light); 
+            padding: 2rem; 
+            border-radius: var(--radius-lg); 
+            transition: var(--transition); 
+        }
+        .skill-box h4 { font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
+        .skill-level { height: 5px; background: rgba(239, 230, 222, 0.2); margin-bottom: 1.2rem; border-radius: 10px; overflow: hidden; }
+        .skill-fill { height: 100%; background: var(--bg); width: 0; transition: width 1.5s ease-out; }
+        .skill-details { list-style: none; font-size: 0.8rem; opacity: 0.9; }
+        .skill-details li { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 8px; }
+
+        /* Education */
+        .edu-list { border-left: 2px solid var(--primary); padding-left: 1.5rem; margin-left: 0.5rem; }
+        .edu-item { margin-bottom: 3rem; position: relative; }
+        .edu-item::before { content: ''; position: absolute; left: -2.15rem; top: 6px; width: 16px; height: 16px; background: var(--bg); border: 3px solid var(--primary); border-radius: 50%; }
+        .edu-year { font-weight: 900; color: var(--primary); font-size: 0.9rem; display: block; margin-bottom: 0.25rem; }
+        .edu-school { font-size: 0.85rem; color: #666; }
+
+        /* Footer */
+        footer { padding: 60px 0 40px 0; background: var(--primary); color: var(--text-light); text-align: center; }
+        .footer-socials { display: flex; justify-content: center; gap: 3rem; margin-bottom: 1.5rem; }
+        .footer-socials a { color: var(--text-light); font-size: clamp(1.5rem, 5vw, 2.2rem); transition: var(--transition); }
+        .footer-info { font-size: 0.9rem; letter-spacing: 0.5px; }
+        .copyright { opacity: 0.6; font-size: 0.7rem; margin-bottom: 4px; }
+        .watermark { font-size: 0.6rem; opacity: 0; transform: translateY(8px); letter-spacing: 2px; text-transform: uppercase; font-weight: 500; color: rgba(239, 230, 222, 0.4); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .watermark.reveal { opacity: 1; transform: translateY(0); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--primary);
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 4rem 2rem;
+                transition: 0.4s ease-in-out;
+                z-index: 2050;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                color: var(--text-light);
+                margin: 1.5rem 0;
+                font-size: 1.2rem;
+                margin-left: 0;
+            }
+
+            .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+
+            .project-grid { grid-template-columns: 1fr; }
+            .image-gallery { grid-template-columns: 1fr; }
+            .footer-socials { gap: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-content">
+            <a href="#" class="logo">NAVNEET DIXIT</a>
+            
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="nav-links" id="navLinks">
+                <a href="#work">Work</a>
+                <a href="#stack">Software</a>
+                <a href="#about">Education</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <img src="Navneet.jpeg" alt="Navneet Dixit" class="profile-img">
+            <div class="name-wrapper">
+                <h1 id="animated-name"></h1>
+            </div>
+            <p class="tagline">Creative 3D Environment Artist</p>
+            <div class="professional-summary" id="summary-text"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="stack">
+            <h2 class="section-title">Software Stack</h2>
+            <div class="skills-grid">
+                <div class="skill-box">
+                    <h4><i class="fa-solid fa-cube"></i> Blender</h4>
+                    <div class="skill-level"><div class="skill-fill" data-width="95%"></div></div>
+                    <ul class="skill-details">
+                        <li>Environment Asset Creation</li>
+                        <li>High-to-Low Poly Baking</li>
+                        <li>Advanced Topology Control</li>
+                    </ul>
+                </div>
+                <div class="skill-box">
+                    <h4><i class="fa-solid fa-shapes"></i> Maya</h4>
+                    <div class="skill-level"><div class="skill-fill" data-width="88%"></div></div>
+                    <ul class="skill-details">
+                        <li>Game Engine Ready Assets</li>
+                        <li>Precise UV Unwrapping</li>
+                        <li>Hard Surface Modeling</li>
+                    </ul>
+                </div>
+                <div class="skill-box">
+                    <h4><i class="fa-solid fa-fill-drip"></i> Substance</h4>
+                    <div class="skill-level"><div class="skill-fill" data-width="92%"></div></div>
+                    <ul class="skill-details">
+                        <li>PBR Material Development</li>
+                        <li>Smart Masking Techniques</li>
+                        <li>Procedural Wear & Tear</li>
+                    </ul>
+                </div>
+                <div class="skill-box">
+                    <h4><i class="fa-solid fa-image"></i> Photoshop</h4>
+                    <div class="skill-level"><div class="skill-fill" data-width="80%"></div></div>
+                    <ul class="skill-details">
+                        <li>Post-Processing Renders</li>
+                        <li>Custom Alpha Creation</li>
+                        <li>Texture Cleanup</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="work">
+            <h2 class="section-title">Project Gallery</h2>
+            <div class="project-grid" id="projectGrid"></div>
+        </section>
+
+        <section id="about">
+            <h2 class="section-title">Academic Journey</h2>
+            <div class="edu-list">
+                <div class="edu-item">
+                    <span class="edu-year">2022 — 2025</span>
+                    <p><strong>Bachelor of Animation & Design</strong></p>
+                    <p class="edu-school">VEDA College, Pune, Maharashtra</p>
+                </div>
+                <div class="edu-item">
+                    <span class="edu-year">2020</span>
+                    <p><strong>Intermediate School (CBSE)</strong></p>
+                    <p class="edu-school">Police Modern School, Sitapur, UP</p>
+                </div>
+                <div class="edu-item">
+                    <span class="edu-year">2018</span>
+                    <p><strong>High School (ICSE)</strong></p>
+                    <p class="edu-school">Regency Public School, Sitapur, UP</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <h2 style="margin-bottom: 2rem; font-weight: 900; letter-spacing: 4px; font-size: clamp(1.2rem, 4vw, 1.5rem);">GET IN TOUCH</h2>
+            <div class="footer-socials">
+                <a href="https://www.linkedin.com/in/navneet-dixit-949759272/"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://www.behance.net/navneetdixit52"><i class="fa-brands fa-behance"></i></a>
+                <a href="https://www.instagram.com/navneet.3djourney?igsh=aHNpcXJ1OTFlbzl5&utm_source=qr"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+            
+            <div class="footer-info">
+                <p style="margin-bottom: 0.2rem; font-weight: 600;">navneetdi237@gmail.com</p>
+                <p style="margin-bottom: 1.5rem; opacity: 0.8;">+91 8177043936</p>
+                
+                <div class="copyright">Greater Noida, UP | © 2024 NAVNEET DIXIT</div>
+                <div class="watermark" id="watermark">
+                    Designed & developed by [Shantanu Mishra]
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const nameStr = "NAVNEET DIXIT";
+        const summary = "I am a motivated 3D Artist aspiring to push the boundaries of digital realism and environmental storytelling. With a focus on hard-surface modeling and production-ready asset creation, I strive to contribute to high-end game development pipelines and visual effects teams, ensuring every model tells a unique story through detailed topology and PBR excellence.";
+
+        const nameContainer = document.getElementById('animated-name');
+        const summaryContainer = document.getElementById('summary-text');
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        // Mobile Menu Logic
+        menuToggle.onclick = () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        };
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.onclick = () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            };
+        });
+
+        // Dynamic Name Reveal
+        nameStr.split('').forEach((char, idx) => {
+            const span = document.createElement('span');
+            span.className = 'char';
+            span.textContent = char === ' ' ? '\u00A0' : char;
+            span.style.animationDelay = `${idx * 0.08}s`;
+            nameContainer.appendChild(span);
+        });
+
+        // Dynamic Summary Reveal
+        summary.split(' ').forEach((word, idx) => {
+            const span = document.createElement('span');
+            span.className = 'word';
+            span.textContent = word + '\u00A0';
+            span.style.animationDelay = `${1.8 + (idx * 0.03)}s`;
+            summaryContainer.appendChild(span);
+        });
+
+        const projects = [
+            {
+                title: "Modern Kitchen Interior",
+                short: "Contemporary Interior: Lighting & Layout Study.",
+                desc: "A detailed interior architectural visualization showcasing a modern kitchen and breakfast bar. This `clay render` highlights the precision of the 3D modeling and the composition of the scene, emphasizing realistic scale and effective use of negative space.",
+                mainImg: "Kitchen.jpg",
+                gallery: [
+                    "Kitchen1.jpg",
+                    "Kitchen2.jpg",
+                    "Kitchen3.jpg",
+                    "Kitchen.jpg"
+                ]
+            },
+            {
+                title: "Zen Garden Gazebo",
+                short: "Eastern Serenity: Architectural Environment.",
+                desc: "A stylized outdoor environment featuring a traditional Japanese-inspired gazebo. This project focused on integrating hard-surface structural modeling with organic elements like high-poly foliage and dynamic lighting to create a peaceful, cinematic atmosphere.",
+                mainImg: "p.jpg",
+                gallery: [
+                    "p1.jpg",
+                    "p3.jpg",
+                    "p5.jpg",
+                    "p6.jpg"
+                ]
+            },
+            {
+                title: "The Weary King",
+                short: "Stylized Character: The Throne.",
+                desc: "A character-driven render featuring a stylized king in a regal, tufted throne. This piece explores character posing, cloth simulation, and material contrast—balancing the soft textures of the velvet and fabric against the hard, ornate gold trim of the chair.",
+                mainImg: "Throne1.jpg",
+                gallery: [
+                    "Throne2.jpg",
+                    "Throne3.jpg",
+                    "Throne4.jpg",
+                    "Throne5.jpg"
+                ]
+            },
+            {
+                title: "Tactical Shotgun",
+                short: "Hard-Surface Asset: Tactical Pump-Action Shotgun.",
+                desc: "A high-fidelity weapon model developed with a focus on technical accuracy and clean topology. The wireframe overlay demonstrates a professional approach to mesh flow, ensuring the asset is optimized for high-quality texture baking in Substance Painter.",
+                mainImg: "s2.jpg",
+                gallery: [
+                    "s1.jpg",
+                    "s3.jpg",
+                    "s4.jpg",
+                    "s5.jpg"
+                ]
+            }
+        ];
+
+        const grid = document.getElementById('projectGrid');
+        projects.forEach((p, index) => {
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            card.setAttribute('data-index', index);
+            
+            card.onclick = (e) => {
+                // Prevent bubbling if clicking links inside (if any added later)
+                const isActive = card.classList.contains('active');
+                
+                // Close all cards
+                document.querySelectorAll('.project-card').forEach(c => c.classList.remove('active'));
+                
+                // If the clicked card wasn't already active, open it
+                if (!isActive) {
+                    card.classList.add('active');
+                }
+            };
+
+            card.innerHTML = `
+                <div class="card-header"><img src="${p.mainImg}" loading="lazy"></div>
+                <div class="card-body">
+                    <h3>${p.title}</h3>
+                    <p>${p.short}</p>
+                </div>
+                <div class="expanded-content">
+                    <p style="padding: 1rem 0; border-top:1px solid #eee; font-size: 0.9rem;">${p.desc}</p>
+                    <div class="image-gallery">${p.gallery.map(img => `<img src="${img}" loading="lazy">`).join('')}</div>
+                </div>`;
+            grid.appendChild(card);
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if(e.isIntersecting) {
+                    e.target.style.opacity = 1;
+                    e.target.style.transform = "translateY(0)";
+                    if(e.target.id === 'stack') {
+                        e.target.querySelectorAll('.skill-fill').forEach(bar => {
+                            bar.style.width = bar.getAttribute('data-width');
+                        });
+                    }
+                    if(e.target.id === 'contact') {
+                        setTimeout(() => {
+                            document.getElementById('watermark').classList.add('reveal');
+                        }, 500);
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section, footer').forEach(s => {
+            if(s.tagName !== 'FOOTER') {
+                s.style.opacity = 0;
+                s.style.transform = "translateY(30px)";
+                s.style.transition = "all 1s cubic-bezier(0.16, 1, 0.3, 1)";
+            }
+            observer.observe(s);
+        });
+    </script>
+</body>
+</html>
